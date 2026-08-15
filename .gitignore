@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Ponder's generated client and local database artifacts.
+.ponder/
+generated/
+
+.env
+.env.*
+!.env.example
+.DS_Store

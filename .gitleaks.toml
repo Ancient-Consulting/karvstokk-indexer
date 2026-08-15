@@ -1,0 +1,10 @@
+title = "karvstokk-indexer"
+
+[extend]
+useDefault = true
+
+# There are deliberately no allowlists. This repository is public and its
+# history is not retractable, so an allowlist here is a decision to let one
+# specific string live in public git forever. Any entry added below must name
+# the file it applies to, pin the exact value, and say in prose why that value
+# is safe in public — see the karvstokk repo's .gitleaks.toml for the shape.

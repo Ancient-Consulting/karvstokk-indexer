@@ -1,0 +1,43 @@
+name: CI
+
+# This repository is public and its history is not retractable: a key leaked in
+# commit 3 stays reachable after the fix. gitleaks is therefore in CI from the
+# first commit, and it scans the whole history rather than the diff.
+#
+# Typecheck, lint and test join this file when there is code to run them
+# against (M3). Nothing in this file may ever deploy anything.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    env:
+      GITLEAKS_VERSION: 8.30.0
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # The upstream gitleaks-action requires a paid licence key for
+      # organisation-owned repositories; the tool itself does not. Run the
+      # release binary directly.
+      - name: Install gitleaks
+        run: |
+          curl -fsSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Scan git history
+        run: gitleaks git --redact --no-banner --exit-code 1
