@@ -4,8 +4,8 @@ name: CI
 # commit 3 stays reachable after the fix. gitleaks is therefore in CI from the
 # first commit, and it scans the whole history rather than the diff.
 #
-# Typecheck, lint and test join this file when there is code to run them
-# against (M3). Nothing in this file may ever deploy anything.
+# Vitest and the golden fixtures join this file at M3, with the handlers they
+# would test. Nothing in this file may ever deploy anything.
 
 on:
   push:
@@ -20,6 +20,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check:
+    name: format · typecheck · lint · verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm format:check
+
+      - run: pnpm typecheck
+
+      - run: pnpm lint
+
+      # The claim this repository exists to make: the four recorded UIDs really
+      # are the keccak of the four schema strings printed beside them. Offline,
+      # no network, no build step — the same command a skeptic runs.
+      - run: pnpm verify
+
   gitleaks:
     name: gitleaks
     runs-on: ubuntu-latest

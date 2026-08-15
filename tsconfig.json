@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Nothing here is compiled: `pnpm verify` is `node src/verify-uids.ts`,
+    // run straight off the source by Node's type stripping. That is deliberate
+    // — a skeptic checking our UIDs should not have to trust a build step —
+    // and it is what these two settings encode. `erasableSyntaxOnly` rejects
+    // the TypeScript that stripping cannot erase (enums, namespaces,
+    // parameter properties) before it reaches a file Node has to run.
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "noEmit": true,
+
+    // Kept identical to the settings the Karvstokk application compiles under,
+    // so the mirrored constants typecheck the same way on both sides of the
+    // drift check.
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    "types": ["node"]
+  },
+  "include": ["src"]
+}
