@@ -1,0 +1,33 @@
+{
+  "name": "karvstokk-indexer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Open-source indexer for Karvstokk, and canonical home of the v1 EAS constants.",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": "^24.11.0",
+    "pnpm": "^10.0.0"
+  },
+  "scripts": {
+    "verify": "node src/verify-uids.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^10.8.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.11.0",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0"
+  }
+}

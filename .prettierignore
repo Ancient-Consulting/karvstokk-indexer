@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+pnpm-lock.yaml
+.ponder/
+generated/
+
+# Prose is left as written — reformatting it would bury real diffs under
+# whitespace churn.
+*.md
+docs/
